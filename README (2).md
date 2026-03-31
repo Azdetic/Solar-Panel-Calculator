@@ -1,4 +1,4 @@
-# SolarSmart — IDE Prompt / Build Spec
+git push# SolarSmart — IDE Prompt / Build Spec
 
 ## Project Overview
 
