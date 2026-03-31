@@ -15,11 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Admin
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Administrator',
+            'email' => 'admin@solarsmart.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin',
+        ]);
+
+        // Demo User
+        User::factory()->create([
+            'name' => 'Demo User',
+            'email' => 'user@solarsmart.com',
+            'password' => bcrypt('password'),
+            'role' => 'user',
+        ]);
+
+        $this->call([
+            TariffSeeder::class,
         ]);
     }
 }
