@@ -12,8 +12,8 @@
         <div class="absolute top-4 left-4 right-4 z-10">
             <div class="glass-overlay flex items-center px-4 py-2 rounded-lg shadow-lg border border-white/20">
                 <span class="material-symbols-outlined text-outline mr-2 text-xl">search</span>
-                <input onkeypress="window.searchLocation(event)" class="bg-transparent border-none focus:ring-0 w-full text-on-surface font-body text-sm py-1" placeholder="Cari alamat atau kota (Tekan Enter)..." type="text" value="{{ $locationName }}"/>
-                <span onclick="window.locateUser()" class="material-symbols-outlined text-outline ml-2 cursor-pointer hover:text-primary transition-colors text-xl" title="Gunakan Lokasi Saat Ini">my_location</span>
+                <input onkeypress="window.searchLocation(event)" class="bg-transparent border-none focus:ring-0 w-full text-on-surface font-body text-sm py-1" placeholder="Search address or city (Press Enter)..." type="text" value="{{ $locationName }}"/>
+                <span onclick="window.locateUser()" class="material-symbols-outlined text-outline ml-2 cursor-pointer hover:text-primary transition-colors text-xl" title="Use Current Location">my_location</span>
             </div>
         </div>
         
@@ -25,7 +25,7 @@
             <button onclick="window.zoomMapOut()" class="glass-overlay w-8 h-8 rounded-lg shadow-md flex items-center justify-center text-on-surface hover:bg-surface-container-lowest transition-all">
                 <span class="material-symbols-outlined text-xl">remove</span>
             </button>
-            <button onclick="window.toggleLayer()" title="Ganti Mode Peta (Satelit/Jalan)" class="glass-overlay w-8 h-8 rounded-lg shadow-md flex items-center justify-center text-on-surface hover:bg-surface-container-lowest transition-all">
+            <button onclick="window.toggleLayer()" title="Toggle Map Mode (Satellite/Street)" class="glass-overlay w-8 h-8 rounded-lg shadow-md flex items-center justify-center text-on-surface hover:bg-surface-container-lowest transition-all">
                 <span class="material-symbols-outlined text-xl">layers</span>
             </button>
         </div>
@@ -51,15 +51,15 @@
             @if(!$simulationResult)
             <!-- STATE A: INPUT FORM -->
             <div class="mb-5">
-                <span class="label-md font-bold text-primary uppercase tracking-widest text-[10px]">Simulasi Energi</span>
-                <h1 class="font-headline text-2xl font-extrabold text-on-surface mt-1 tracking-tight leading-none">Detail Kalkulasi</h1>
-                <p class="text-on-surface-variant text-xs mt-1.5 leading-tight">Parameter gedung untuk proyeksi penghematan presisi.</p>
+                <span class="label-md font-bold text-primary uppercase tracking-widest text-[10px]">Energy Simulation</span>
+                <h1 class="font-headline text-2xl font-extrabold text-on-surface mt-1 tracking-tight leading-none">Calculation Details</h1>
+                <p class="text-on-surface-variant text-xs mt-1.5 leading-tight">Enter your building parameters for a precise savings projection</p>
             </div>
             
             <div class="space-y-4">
                 <!-- Location Readout -->
                 <div class="space-y-1.5">
-                    <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Lokasi Terpilih</label>
+                    <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Selected Location</label>
                     <div class="flex items-center gap-2 bg-surface-container-high px-3 py-2 rounded-lg" wire:loading.class="opacity-50 animate-pulse" wire:target="updateLocation">
                         <span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">location_on</span>
                         <span class="font-body font-semibold text-sm text-on-surface line-clamp-1 truncate" title="{{ $locationName }}">{{ $locationName }}</span>
@@ -71,18 +71,18 @@
                     <!-- Roof Dimensions Grid -->
                     <div class="grid grid-cols-2 gap-3">
                         <div class="space-y-1">
-                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Panjang (m)</label>
+                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Length (m)</label>
                             <input wire:model.live="length" class="w-full bg-surface-container-high border-none rounded-lg p-2 text-on-surface focus:ring-1 focus:ring-primary/40 transition-all font-headline font-bold text-sm" placeholder="0" type="number"/>
                         </div>
                         <div class="space-y-1">
-                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Lebar (m)</label>
+                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Width (m)</label>
                             <input wire:model.live="width" class="w-full bg-surface-container-high border-none rounded-lg p-2 text-on-surface focus:ring-1 focus:ring-primary/40 transition-all font-headline font-bold text-sm" placeholder="0" type="number"/>
                         </div>
                     </div>
                     
                     <!-- Area Calculation Result (Integrated) -->
                     <div class="flex justify-between items-center px-1 border-y border-outline-variant/20 py-2">
-                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Luas Area Atap</span>
+                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Roof Area</span>
                         <div class="flex items-baseline gap-1">
                             <span class="text-xl font-headline font-extrabold text-tertiary leading-none">{{ number_format($area, 1) }}</span>
                             <span class="text-[10px] font-body font-bold text-on-surface-variant uppercase">m²</span>
@@ -92,7 +92,7 @@
                     <!-- Tariff & Bill -->
                     <div class="grid grid-cols-1 gap-3">
                         <div class="space-y-1">
-                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Golongan Tarif PLN</label>
+                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">PLN Tariff Group</label>
                             <div class="relative">
                                 <select wire:model.live="tariff_id" class="w-full bg-surface-container-high border-none rounded-lg p-2 text-on-surface focus:ring-1 focus:ring-primary/40 transition-all appearance-none cursor-pointer font-body text-sm py-2">
                                     @foreach($tariffs as $t)
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="space-y-1">
-                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Rata-rata Tagihan Bulanan</label>
+                            <label class="font-label text-[10px] font-bold text-outline-variant uppercase">Average Monthly Bill</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold text-xs">Rp</span>
                                 <input wire:model.live="bill" class="w-full bg-surface-container-high border-none rounded-lg p-2 pl-9 text-on-surface focus:ring-1 focus:ring-primary/40 transition-all font-headline font-bold text-base" type="text"/>
@@ -115,17 +115,17 @@
                 <!-- Budget Input - UI Friendly -->
                 <div class="space-y-1 pt-1">
                     <label class="font-label text-[10px] font-bold text-outline-variant uppercase flex justify-between">
-                        Estimasi Budget (Maksimal Biaya)
+                        Estimated Budget (Max Cost)
                     </label>
                     <div class="relative">
                         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold text-xs">Rp</span>
-                        <input wire:model.live.debounce.500ms="budget" class="w-full bg-surface-container-high border-none rounded-lg p-3 pl-9 text-on-surface focus:ring-1 focus:ring-primary/40 transition-all font-headline font-bold text-base" type="number" min="1000000" placeholder="Contoh: 25000000"/>
+                        <input wire:model.live.debounce.500ms="budget" class="w-full bg-surface-container-high border-none rounded-lg p-3 pl-9 text-on-surface focus:ring-1 focus:ring-primary/40 transition-all font-headline font-bold text-base" type="number" min="1000000" placeholder="e.g. 25000000"/>
                     </div>
                 </div>
                 
                 <!-- CTA Button -->
                 <button wire:click="calculateResult" wire:loading.attr="disabled" class="w-full solar-gradient text-white py-4 rounded-xl font-headline font-extrabold text-base shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all mt-2 flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-wait">
-                    <span wire:loading.remove wire:target="calculateResult">Hitung Sekarang</span>
+                    <span wire:loading.remove wire:target="calculateResult">Calculate Now</span>
                     <span wire:loading wire:target="calculateResult">Processing NASA Data...</span>
                     
                     <span wire:loading.remove wire:target="calculateResult" class="material-symbols-outlined text-xl">bolt</span>
@@ -136,16 +136,16 @@
             @else
             <!-- STATE B: RESULT VIEW -->
             <div class="flex flex-col h-full animate-fade-in">
-                <div class="flex justify-between items-start mb-6 border-b border-outline-variant/20 pb-4">
+                <div class="flex justify-between items-start mb-4 border-b border-outline-variant/20 pb-4">
                     <div>
-                        <span class="label-md font-bold text-primary uppercase tracking-widest text-[10px]">Simulation Result</span>
-                        <h2 class="font-headline text-2xl font-extrabold text-on-surface mt-1 leading-none">Feasibility Report</h2>
+                        <span class="label-md font-bold text-primary uppercase tracking-widest text-[10px]">simulation report</span>
+                        <h2 class="font-headline text-2xl font-extrabold text-on-surface mt-1 leading-none">Feasibility Results</h2>
                         <div class="flex items-center gap-1 mt-2 text-on-surface-variant text-xs">
                             <span class="material-symbols-outlined text-sm">location_on</span>
                             <span class="truncate max-w-[200px]">{{ $locationName }}</span>
                         </div>
                     </div>
-                    <button wire:click="$set('simulationResult', null)" class="text-xs font-bold text-tertiary hover:underline flex items-center gap-1 bg-surface-container-high px-3 py-1.5 rounded-full hover:bg-surface-container-highest transition-colors">
+                    <button wire:click="$set('simulationResult', null)" class="text-xs font-bold text-tertiary flex items-center gap-1 bg-surface-container-high px-3 py-1.5 rounded-full hover:bg-surface-container-highest transition-colors">
                         <span class="material-symbols-outlined text-sm">arrow_back</span>
                         Recalculate
                     </button>
@@ -191,33 +191,112 @@
                     <!-- Energy Independence Bar -->
                     <div class="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/10">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Energy Independence</span>
+                            <span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">energy independence</span>
                             <span class="font-bold text-sm text-on-surface">{{ $simulationResult['independence_percent'] }}%</span>
                         </div>
                         <div class="w-full bg-surface-container-highest rounded-full h-2.5 overflow-hidden">
                             <div class="bg-secondary h-2.5 rounded-full" style="width: {{ $simulationResult['independence_percent'] }}%"></div>
                         </div>
                         <p class="text-[10px] text-outline-variant mt-2 leading-tight">
-                            Covers {{ $simulationResult['independence_percent'] }}% of your estimated monthly usage ({{ $simulationResult['estimated_usage_kwh'] }} kWh/mo).
+                            Covers {{ $simulationResult['independence_percent'] }}% of your estimated monthly usage ({{ $simulationResult['estimated_usage_kwh'] }} kWh/mo)
                         </p>
                     </div>
                     
-                    <!-- Accordion Details -->
+                    <!-- Transparent Calculation Breakdown -->
                     <details class="group bg-surface-container-low border border-outline-variant/20 rounded-xl overflow-hidden shadow-sm">
                         <summary class="px-4 py-3 text-xs font-bold cursor-pointer text-on-surface hover:bg-surface-container-high transition-colors flex justify-between items-center">
-                            View Detailed Calculations
+                            How did we calculate this?
                             <span class="material-symbols-outlined text-sm transition-transform group-open:rotate-180">expand_more</span>
                         </summary>
-                        <div class="px-4 py-4 bg-surface-container-highest/20 text-[11px] text-on-surface-variant space-y-2 border-t border-outline-variant/20">
-                            <p class="font-bold text-on-surface uppercase tracking-wider mb-2">Technical Specs</p>
-                            <div class="grid grid-cols-2 gap-1 gap-x-4">
-                                <span>GHI (NASA POWER):</span> <strong class="text-right">{{ $simulationResult['ghi'] }} kWh/m²/day</strong>
-                                <span>Roof Capacity Limit:</span> <strong class="text-right">{{ $simulationResult['capacity_from_roof'] }} kWp</strong>
-                                <span>Budget Capacity Limit:</span> <strong class="text-right">{{ $simulationResult['capacity_from_budget'] }} kWp</strong>
-                                <span>Free Energy After BEP:</span> <strong class="text-right">{{ $simulationResult['remaining_lifespan'] }} Years</strong>
+
+                        <div class="px-4 py-4 border-t border-outline-variant/10 space-y-4 text-[11px] text-on-surface-variant">
+
+                            {{-- Step 0: NASA API --}}
+                            <div class="bg-primary/5 border border-primary/15 rounded-lg p-3 space-y-1">
+                                <p class="font-bold text-primary uppercase tracking-wider text-[10px] flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">satellite_alt</span>
+                                    Step 1: NASA POWER API
+                                </p>
+                                <p class="leading-relaxed">We sent your coordinates (lat: <strong class="text-on-surface">{{ $latitude }}</strong>, lng: <strong class="text-on-surface">{{ $longitude }}</strong>) to NASA POWER to get the annual average solar radiation at your location.</p>
+                                <div class="mt-2 bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface">
+                                    GET nasa.gov/api → ALLSKY_SFC_SW_DWN → <strong>{{ $simulationResult['ghi'] }} kWh/m²/day</strong>
+                                </div>
+                                <p class="text-[10px] text-outline italic">This is the average sunlight energy hitting 1 square meter of your roof per day over multiple years.</p>
                             </div>
-                            <div class="pt-2 mt-2 border-t border-outline-variant/20 text-[9px] text-outline italic">
-                                * NASA POWER climatology data provides multi-year average solar radiation figures appropriate for feasibility studies. Panel efficiency 20%, System losses 25%. Market price approx Rp 11jt/kWp.
+
+                            {{-- Step 1: Roof --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 2: Roof Capacity</p>
+                                <p>Your roof is <strong class="text-on-surface">{{ $length }}m × {{ $width }}m = {{ $area }} m²</strong>. We use 75% of that as usable area for panels.</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    {{ $area }} m² × 0.75 = {{ round($area * 0.75, 1) }} m² usable
+                                    <br>
+                                    {{ round($area * 0.75, 1) }} ÷ 6.5 m²/panel × 0.4 kWp/panel = <strong>{{ $simulationResult['capacity_from_roof'] }} kWp max</strong>
+                                </div>
+                            </div>
+
+                            {{-- Step 2: Budget --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 3: Budget Capacity</p>
+                                <p>Market price is around Rp 11,000,000 per kWp installed.</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    Rp {{ number_format($budget, 0, ',', '.') }} ÷ Rp 11,000,000 = <strong>{{ $simulationResult['capacity_from_budget'] }} kWp max</strong>
+                                </div>
+                            </div>
+
+                            {{-- Step 3: Final capacity --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 4: Final System Size</p>
+                                <p>We pick whichever limit is smaller. Your <strong class="text-on-surface">{{ $simulationResult['bottleneck'] === 'roof' ? 'roof space' : 'budget' }}</strong> is the bottleneck.</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    min({{ $simulationResult['capacity_from_roof'] }}, {{ $simulationResult['capacity_from_budget'] }}) = <strong>{{ $simulationResult['installed_capacity'] }} kWp</strong>
+                                </div>
+                            </div>
+
+                            {{-- Step 4: Production --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 5: Energy Production</p>
+                                <p>Using system efficiency of 75% (accounting for inverter, wiring, and temperature losses).</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    {{ $simulationResult['installed_capacity'] }} kWp × {{ $simulationResult['ghi'] }} GHI × 0.75 = {{ round($simulationResult['production_per_month'] / 30, 2) }} kWh/day
+                                    <br>
+                                    × 30 days = {{ $simulationResult['production_per_month'] }} kWh/month
+                                    <br>
+                                    × 12 months = <strong>{{ number_format($simulationResult['production_per_year'], 0, ',', '.') }} kWh/year</strong>
+                                </div>
+                            </div>
+
+                            {{-- Step 5: Savings --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 6: Monthly Savings</p>
+                                <p>Your selected PLN tariff price is multiplied against the electricity you no longer buy from the grid.</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    {{ $simulationResult['production_per_month'] }} kWh × your PLN tariff = <strong>Rp {{ number_format($simulationResult['savings_per_month'], 0, ',', '.') }}/month</strong>
+                                </div>
+                            </div>
+
+                            {{-- Step 6: Payback --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 7: Payback Period</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    Rp {{ number_format($simulationResult['investment_cost'], 0, ',', '.') }} ÷ Rp {{ number_format($simulationResult['savings_per_year'], 0, ',', '.') }}/year = <strong>{{ $simulationResult['payback_years'] }} years</strong>
+                                    <br>
+                                    25yr lifespan − {{ $simulationResult['payback_years'] }} = <strong>{{ $simulationResult['remaining_lifespan'] }} years of free electricity</strong>
+                                </div>
+                            </div>
+
+                            {{-- CO2 --}}
+                            <div class="space-y-1">
+                                <p class="font-bold text-on-surface uppercase tracking-wider text-[10px]">Step 8: CO2 Reduction</p>
+                                <p>Indonesia's grid emission factor is 0.785 kg CO₂ per kWh of electricity generated.</p>
+                                <div class="bg-surface-container-high rounded-md px-3 py-2 font-mono text-[10px] text-on-surface mt-1">
+                                    {{ number_format($simulationResult['production_per_year'], 0, ',', '.') }} kWh × 0.785 = <strong>{{ number_format($simulationResult['co2_per_year'], 0, ',', '.') }} kg CO₂/year</strong>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 border-t border-outline-variant/10 text-[9px] text-outline italic">
+                                Constants used: panel efficiency 20%, system losses 25%, 6.5 m²/panel, 0.4 kWp/panel, Rp 11jt/kWp market price, 25 year lifespan, CO₂ factor 0.785 kg/kWh (Indonesia grid).
+                                NASA POWER climatology data is a multi-year average and is appropriate for feasibility studies.
                             </div>
                         </div>
                     </details>

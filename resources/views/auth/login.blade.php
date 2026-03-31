@@ -4,9 +4,9 @@
 <main class="flex-grow flex items-center justify-center pt-16 pb-8 px-6 w-full">
     <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/20 w-full max-w-md">
         <div class="text-center mb-8">
-            <span class="material-symbols-outlined text-4xl text-primary font-bold">solar_power</span>
-            <h1 class="font-headline text-2xl font-extrabold text-on-surface mt-2 tracking-tight">Welcome Back</h1>
-            <p class="text-outline-variant text-sm mt-1">Sign in to SolarSmart</p>
+            <span class="material-symbols-outlined text-4xl text-primary font-bold">admin_panel_settings</span>
+            <h1 class="font-headline text-2xl font-extrabold text-on-surface mt-2 tracking-tight">Admin Authentication</h1>
+            <p class="text-outline-variant text-sm mt-1">Please log in to manage master data.</p>
         </div>
 
         @if($errors->any())
@@ -36,10 +36,6 @@
                 Sign In
             </button>
         </form>
-
-        <p class="text-center text-xs text-outline mt-6">
-            Don't have an account? <a href="{{ route('register') }}" class="text-primary font-bold hover:underline">Register now</a>
-        </p>
     </div>
 </main>
 @endsection

@@ -26,7 +26,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Kombinasi email dan password tidak cocok.',
+            'email' => 'Email and password combination does not match',
         ])->onlyInput('email');
     }
 
@@ -49,7 +49,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect()->route('calculator')->with('success', 'Berhasil mendaftar!');
+        return redirect()->route('calculator')->with('success', 'Registered successfully');
     }
 
     public function logout(Request $request) {
