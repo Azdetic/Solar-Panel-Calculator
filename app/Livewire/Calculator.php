@@ -47,10 +47,15 @@ class Calculator extends Component
     {
         $this->errorMessage = null; // reset
         
+        // Clean inputs from dots/commas before validation
+        $this->bill = str_replace(['.', ','], '', $this->bill);
+        $this->budget = str_replace(['.', ','], '', $this->budget);
+
         $this->validate([
             'length' => 'required|numeric|min:1',
             'width' => 'required|numeric|min:1',
             'tariff_id' => 'required|exists:tariffs,id',
+            'bill' => 'required|numeric|min:0',
             'budget' => 'required|numeric|min:1000000',
         ]);
 
@@ -120,11 +125,8 @@ class Calculator extends Component
             // STEP 8 - CO2 reduction
             $co2PerYear = $productionPerYear * $co2Factor;
             
-            // Clean bill input just in case it contains dots
-            $cleanBill = (float) str_replace(['.', ','], '', $this->bill);
-
             // STEP 9 - Energy Independence
-            $estimatedUsageKwh = max(1, $cleanBill / $pricePerKwh); // Prevent division by zero
+            $estimatedUsageKwh = max(1, $this->bill / $pricePerKwh); // Prevent division by zero
             $independencePercent = min(100, ($productionPerMonth / $estimatedUsageKwh) * 100);
             
             // Save results to display
@@ -163,7 +165,7 @@ class Calculator extends Component
                     'longitude' => $this->longitude,
                     'roof_length' => $this->length,
                     'roof_width' => $this->width,
-                    'average_monthly_bill' => $cleanBill,
+                    'average_monthly_bill' => $this->bill,
                     'estimated_budget' => $this->budget,
                     'ghi_value' => round($ghi, 2),
                 ]);
