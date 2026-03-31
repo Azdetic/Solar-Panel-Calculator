@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return redirect('/calculator');
+    return redirect('/home');
 });
+
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 Route::get('/calculator', \App\Livewire\Calculator::class)->name('calculator');
 
@@ -26,10 +30,6 @@ Route::middleware('auth')->group(function () {
         }
         return redirect('/calculator'); // normal users just get calc
     })->name('dashboard');
-
-    Route::get('/admin', function() {
-        return redirect('/admin/dashboard');
-    });
 
     Route::get('/admin/dashboard', \App\Livewire\AdminDashboard::class)->name('admin.dashboard');
 });
