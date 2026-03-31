@@ -22,7 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
+
+    public function simulations()
+    {
+        return $this->hasMany(Simulation::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
