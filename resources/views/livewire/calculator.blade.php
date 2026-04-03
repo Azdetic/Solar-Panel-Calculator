@@ -5,7 +5,7 @@
     <section class="lg:col-span-8 h-[400px] lg:h-[780px] relative rounded-xl overflow-hidden shadow-sm group">
         
         <div class="absolute inset-0 z-0 bg-surface-container-high" wire:ignore>
-            <div id="map" class="w-full h-full"></div>
+            <div id="map" style="width: 100%; height: 100%; min-height: 500px; z-index: 1;"></div>
         </div>
         
         <!-- Search Bar Overlay -->
@@ -298,6 +298,37 @@
                         </div>
                     </details>
                 </div>
+
+                <!-- Request Quote CTA -->
+                    <div class="mt-6 pt-4 border-t border-outline-variant/20">
+                        @if(session('message'))
+                            <div class="mb-3 p-3 bg-primary/20 text-on-surface rounded-xl text-sm font-medium flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">check_circle</span>
+                                {{ session('message') }}
+                            </div>
+                        @endif
+
+                        @auth
+                            <button wire:click="requestQuotation" class="w-full solar-gradient text-white py-4 rounded-xl font-headline font-extrabold text-base shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <span wire:loading.remove wire:target="requestQuotation">Request Official Quote</span>
+                                <span wire:loading wire:target="requestQuotation">Processing...</span>
+                                <span wire:loading.remove wire:target="requestQuotation" class="material-symbols-outlined text-xl">send</span>
+                                <span wire:loading wire:target="requestQuotation" class="material-symbols-outlined animate-spin text-xl">progress_activity</span>
+                            </button>
+                        @endauth
+                        @guest
+                            <button
+                                type="button"
+                                x-data="{}"
+                                x-on:click="$dispatch('open-guest-modal')"
+                                class="group w-full solar-gradient text-white py-4 rounded-xl font-headline font-extrabold text-base shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                            >
+                                <span class="tracking-[0.01em]">Request Official Quote</span>
+                                <span class="material-symbols-outlined text-xl transition-transform duration-200 group-hover:translate-x-0.5">send</span>
+                            </button>
+                        @endguest
+                    </div>
+
             </div>
             @endif
         </div>
@@ -306,12 +337,63 @@
 
     </section>
 
+    
+    <!-- Modals Overlay -->
+    
+    <!-- 1. Vendor Selection Modal (Logged In) -->
+    @if($isVendorModalOpen)
+    <div class="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in" wire:ignore.self>
+        <div class="bg-surface-container p-6 lg:p-8 rounded-3xl w-full max-w-md shadow-2xl relative">
+            <h3 class="font-headline font-extrabold text-2xl text-on-surface">Pick a Vendor</h3>
+            <p class="text-sm text-on-surface-variant mt-2">Who do you want to send your quote request to for this setup?</p>
+            
+            <div class="mt-6 space-y-3 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
+                @forelse($vendorsList as $vendor)
+                    <label class="flex items-center gap-3 p-4 rounded-xl border border-outline-variant/30 hover:bg-surface-container-highest cursor-pointer transition-colors {{ $selectedVendorId == $vendor->id ? 'bg-primary/10 border-primary' : '' }}">
+                        <input type="radio" wire:model.live="selectedVendorId" value="{{ $vendor->id }}" class="text-primary focus:ring-primary w-5 h-5">
+                        <div>
+                            <p class="font-bold text-on-surface">{{ $vendor->name }}</p>
+                            <p class="text-xs text-on-surface-variant">{{ $vendor->email }}</p>
+                        </div>
+                    </label>
+                @empty
+                    <p class="text-sm text-on-surface-variant text-center py-4">No vendors available at the moment.</p>
+                @endforelse
+            </div>
+
+            <div class="mt-8 flex gap-3">
+                <button wire:click="closeVendorModal" class="flex-1 py-3 px-4 rounded-xl font-bold text-on-surface bg-surface-container-highest hover:bg-surface-container-high transition-colors">Cancel</button>
+                <button wire:click="submitQuotationRequest" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 transition-colors disabled:opacity-50" {{ $selectedVendorId ? '' : 'disabled' }}>Send Request</button>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- 2. Guest Login Prompt Modal (Not Logged In) -->
+    <div x-data="{ open: false }" x-show="open" @open-guest-modal.window="open = true" class="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in" style="display: none;">
+        <div class="bg-surface-container p-6 lg:p-8 rounded-3xl w-full max-w-sm shadow-2xl relative" @click.away="open = false">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <span class="material-symbols-outlined text-primary text-3xl">login</span>
+            </div>
+            <h3 class="font-headline font-extrabold text-2xl text-on-surface text-center">Ready to get a quote?</h3>
+            <p class="text-sm text-on-surface-variant mt-3 text-center">You need an account to connect with a vendor, so log in or sign up first!</p>
+            
+            <div class="mt-8 flex flex-col gap-3">
+                <a href="{{ route('login') }}" class="w-full py-3 px-4 rounded-xl font-bold text-white bg-primary text-center hover:bg-primary/90 transition-colors">Log In to Request a Quote</a>
+                <button @click="open = false" class="w-full py-3 px-4 rounded-xl font-bold text-on-surface bg-surface-container-highest hover:bg-surface-container-high transition-colors">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Sun-Trace Background Decoration -->
     <div class="fixed top-[-5%] right-[-2%] w-[35vw] h-[35vw] bg-primary-fixed-dim/5 blur-[100px] rounded-full pointer-events-none z-[-1]"></div>
     <div class="fixed bottom-[-5%] left-[-2%] w-[25vw] h-[25vw] bg-secondary-fixed-dim/5 blur-[80px] rounded-full pointer-events-none z-[-1]"></div>
 
 <script>
-    document.addEventListener('livewire:initialized', () => {
+    document.addEventListener('livewire:navigated', () => {
+          if (window.myMapInstance) {
+              window.myMapInstance.remove();
+          }
         // Init Map at default pos
         const map = L.map('map', {
             zoomControl: false // Disable default zoom so we can hook custom buttons
@@ -385,12 +467,12 @@
                         @this.call('updateLocation', lat, lng);
                     },
                     (error) => {
-                        alert('Gagal mengambil lokasi: ' + error.message);
+                        alert('Failed to get location: ' + error.message);
                     },
                     { enableHighAccuracy: true }
                 );
             } else {
-                alert('Browser Anda tidak mendukung fitur lokasi GPS.');
+                alert('Your browser does not support fitur lokasi GPS.');
             }
         };
 
@@ -418,15 +500,17 @@
                             // Tell Livewire
                             @this.call('updateLocation', lat, lon, data[0].display_name.split(',').slice(0, 2).join(', '));
                         } else {
-                            alert('Lokasi tidak ditemukan! Coba kata kunci lain.');
+                            alert('Location not found! Try another keyword.');
                         }
                     })
                     .catch(err => {
                         event.target.disabled = false;
-                        alert('Terjadi kesalahan jaringan.');
+                        alert('Network error occurred.');
                     });
             }
         };
     });
 </script>
 </main>
+
+
