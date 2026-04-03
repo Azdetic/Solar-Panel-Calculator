@@ -24,6 +24,14 @@ class Calculator extends Component
     // Results from NASA & Math
     public $simulationResult = null;
 
+    // Saved Simulation ID for RFQ
+    public $savedSimulationId = null;
+
+    // Vendor Selection
+    public $isVendorModalOpen = false;
+    public $selectedVendorId = null;
+    public $vendorsList = [];
+
     // Computed
     public $area = 80;
 
@@ -47,10 +55,15 @@ class Calculator extends Component
     {
         $this->errorMessage = null; // reset
         
+        // Clean inputs from dots/commas before validation
+        $this->bill = str_replace(['.', ','], '', $this->bill);
+        $this->budget = str_replace(['.', ','], '', $this->budget);
+
         $this->validate([
             'length' => 'required|numeric|min:1',
             'width' => 'required|numeric|min:1',
             'tariff_id' => 'required|exists:tariffs,id',
+            'bill' => 'required|numeric|min:0',
             'budget' => 'required|numeric|min:1000000',
         ]);
 
@@ -120,11 +133,8 @@ class Calculator extends Component
             // STEP 8 - CO2 reduction
             $co2PerYear = $productionPerYear * $co2Factor;
             
-            // Clean bill input just in case it contains dots
-            $cleanBill = (float) str_replace(['.', ','], '', $this->bill);
-
             // STEP 9 - Energy Independence
-            $estimatedUsageKwh = max(1, $cleanBill / $pricePerKwh); // Prevent division by zero
+            $estimatedUsageKwh = max(1, $this->bill / $pricePerKwh); // Prevent division by zero
             $independencePercent = min(100, ($productionPerMonth / $estimatedUsageKwh) * 100);
             
             // Save results to display
@@ -155,7 +165,7 @@ class Calculator extends Component
 
             // Project Rubric: Transaction Recording if logged in
             if (auth()->check()) {
-                \App\Models\Simulation::create([
+                $savedSim = \App\Models\Simulation::create([
                     'user_id' => auth()->id(),
                     'tariff_id' => $this->tariff_id,
                     'location_name' => $this->locationName,
@@ -163,16 +173,68 @@ class Calculator extends Component
                     'longitude' => $this->longitude,
                     'roof_length' => $this->length,
                     'roof_width' => $this->width,
-                    'average_monthly_bill' => $cleanBill,
+                    'average_monthly_bill' => $this->bill,
                     'estimated_budget' => $this->budget,
                     'ghi_value' => round($ghi, 2),
                 ]);
+                $this->savedSimulationId = $savedSim->id;
             }
 
         } catch (\Exception $e) {
             // Error handling
             $this->errorMessage = 'Calculation Error: ' . $e->getMessage();
         }
+    }
+
+    public function requestQuotation()
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        if (!$this->savedSimulationId) {
+            $this->errorMessage = 'Terjadi kesalahan: Data simulasi belum tersimpan. Silakan hitung ulang.';
+            return;
+        }
+
+        // Cek apakah sudah pernah request untuk simulasi ini
+        $existing = \App\Models\Quotation::where('simulation_id', $this->savedSimulationId)->first();
+        if ($existing) {
+            $this->errorMessage = 'Anda sudah mengajukan penawaran untuk simulasi ini.';
+            return;
+        }
+
+        // Prepare vendor list and open modal
+        $this->vendorsList = \App\Models\User::where('role', 'vendor')->get();
+        if ($this->vendorsList->isEmpty()) {
+            $this->errorMessage = 'Saat ini belum ada vendor yang tersedia.';
+            return;
+        }
+        
+        $this->isVendorModalOpen = true;
+    }
+
+    public function closeVendorModal()
+    {
+        $this->isVendorModalOpen = false;
+        $this->selectedVendorId = null;
+    }
+
+    public function submitQuotationRequest()
+    {
+        $this->validate([
+            'selectedVendorId' => 'required|exists:users,id',
+        ]);
+
+        \App\Models\Quotation::create([
+            'user_id' => auth()->id(),
+            'simulation_id' => $this->savedSimulationId,
+            'vendor_id' => $this->selectedVendorId,
+            'status' => 'requested',
+        ]);
+
+        $this->closeVendorModal();
+        session()->flash('message', 'Quote request sent! Look out for vendor messages in your dashboard.');
     }
 
     // Method to handle map clicks/drags from JS
@@ -228,3 +290,4 @@ class Calculator extends Component
         ])->layout('layouts.calculator');
     }
 }
+

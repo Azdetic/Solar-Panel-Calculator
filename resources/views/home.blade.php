@@ -181,85 +181,169 @@
         </div>
     </section>
 
-    {{-- Glossary --}}
-    <section class="px-8 lg:px-20 py-20">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-14">
-                <span class="text-[10px] font-bold text-tertiary uppercase tracking-widest">glossary</span>
-                <h2 class="font-headline text-4xl font-extrabold text-on-surface mt-2 tracking-tight">What do all these terms mean?</h2>
-                <p class="text-on-surface-variant mt-3 text-base max-w-md mx-auto">The report uses a few technical terms. Here's what they actually mean</p>
+    {{-- Glossary Section --}}
+    <section class="px-8 lg:px-20 py-24">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full">Knowledge Hub</span>
+                <h2 class="font-headline text-4xl font-extrabold text-on-surface mt-4 tracking-tight leading-loose">Understanding the numbers</h2>
+                <p class="text-on-surface-variant mt-3 text-base max-w-lg mx-auto">Solar tech can be confusing. We've simplified the key terms so you know exactly what your report means.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 hover:border-primary/20 transition-all">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="bg-primary/10 text-primary font-headline font-extrabold text-sm px-3 py-1 rounded-lg">kWp</span>
-                        <span class="text-on-surface-variant text-xs">kilowatt-peak</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-surface-container-low rounded-3xl p-7 border border-outline-variant/10 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
                     </div>
-                    <p class="text-on-surface-variant text-sm leading-relaxed">The size of your solar system. 1 kWp means the panels produce 1 kW at peak sunlight. Bigger number, more electricity. A typical Indonesian home runs on 2 to 4 kWp</p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <h3 class="font-headline font-bold text-on-surface">kWp</h3>
+                        <span class="text-[10px] text-on-surface-variant/60 font-medium uppercase tracking-tighter">kilowatt-peak</span>
+                    </div>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">The size of your solar system. 1 kWp means the panels produce 1 kW at peak sunlight. A typical home needs 2 to 4 kWp.</p>
                 </div>
 
-                <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 hover:border-secondary/20 transition-all">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="bg-secondary/10 text-secondary font-headline font-extrabold text-sm px-3 py-1 rounded-lg">GHI</span>
-                        <span class="text-on-surface-variant text-xs">Global Horizontal Irradiance</span>
+                <!-- Card 2 -->
+                <div class="bg-surface-container-low rounded-3xl p-7 border border-outline-variant/10 hover:shadow-xl hover:shadow-secondary/5 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-secondary text-2xl" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
                     </div>
-                    <p class="text-on-surface-variant text-sm leading-relaxed">How much sunlight hits a flat surface at your location per day, in kWh/m². Higher GHI means more power generated. Most of Indonesia is between 4.5 and 5.5</p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <h3 class="font-headline font-bold text-on-surface">GHI</h3>
+                        <span class="text-[10px] text-on-surface-variant/60 font-medium uppercase tracking-tighter">Solar Radiation</span>
+                    </div>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">How much sunlight energy hits your roof. Most of Indonesia is between 4.5 and 5.5 kWh/m² per day.</p>
                 </div>
 
-                <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 hover:border-tertiary/20 transition-all">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="bg-tertiary/10 text-tertiary font-headline font-extrabold text-sm px-3 py-1 rounded-lg">kWh</span>
-                        <span class="text-on-surface-variant text-xs">kilowatt-hour</span>
+                <!-- Card 3 -->
+                <div class="bg-surface-container-low rounded-3xl p-7 border border-outline-variant/10 hover:shadow-xl hover:shadow-tertiary/5 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 bg-tertiary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-tertiary text-2xl" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
                     </div>
-                    <p class="text-on-surface-variant text-sm leading-relaxed">The unit on your PLN bill. Running a 1000W AC for 1 hour uses 1 kWh. Every kWh your panels produce is power you don't pay PLN for</p>
+                    <div class="flex items-center gap-2 mb-2">
+                        <h3 class="font-headline font-bold text-on-surface">kWh</h3>
+                        <span class="text-[10px] text-on-surface-variant/60 font-medium uppercase tracking-tighter">Energy Unit</span>
+                    </div>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">The unit on your PLN bill. Every kWh your panels generate is one less unit you pay for on your monthly electricity bill.</p>
                 </div>
 
-                <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 hover:border-outline/20 transition-all">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="bg-surface-container-highest font-headline font-extrabold text-sm px-3 py-1 rounded-lg text-on-surface">Payback Period</span>
+                <!-- Card 4 -->
+                <div class="bg-surface-container-low rounded-3xl p-7 border border-outline-variant/10 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">currency_exchange</span>
                     </div>
-                    <p class="text-on-surface-variant text-sm leading-relaxed">How many years until your savings cover the installation cost. After that, the electricity is basically free for the remaining years of the panel's 25-year life</p>
+                    <h3 class="font-headline font-bold text-on-surface mb-2">Payback Period</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">How many years until your savings cover the installation cost. After that, your electricity is basically free.</p>
                 </div>
 
-                <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 hover:border-primary/20 transition-all">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="bg-primary/10 text-primary font-headline font-extrabold text-sm px-3 py-1 rounded-lg">Energy Independence</span>
+                <!-- Card 5 -->
+                <div class="bg-surface-container-low rounded-3xl p-7 border border-outline-variant/10 hover:shadow-xl hover:shadow-secondary/5 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 bg-secondary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-secondary text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
                     </div>
-                    <p class="text-on-surface-variant text-sm leading-relaxed">What percentage of your monthly bill your panels can cover. 25% means one quarter covered by solar, the rest still from PLN. Bigger roof or budget pushes this up</p>
+                    <h3 class="font-headline font-bold text-on-surface mb-2">Independence</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">What percentage of your monthly bill your panels can cover. Higher numbers mean less reliance on the grid.</p>
                 </div>
 
-                <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 hover:border-secondary/20 transition-all">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="bg-secondary/10 text-secondary font-headline font-extrabold text-sm px-3 py-1 rounded-lg">CO₂ Reduction</span>
+                <!-- Card 6 -->
+                <div class="bg-surface-container-low rounded-3xl p-7 border border-outline-variant/10 hover:shadow-xl hover:shadow-tertiary/5 hover:-translate-y-1 transition-all group">
+                    <div class="w-12 h-12 bg-tertiary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-tertiary text-2xl" style="font-variation-settings: 'FILL' 1;">eco</span>
                     </div>
-                    <p class="text-on-surface-variant text-sm leading-relaxed">Each kWh from PLN's grid emits ~0.785 kg of CO₂. Solar replaces those kWh, so this number shows the emissions you'd cut each year</p>
+                    <h3 class="font-headline font-bold text-on-surface mb-2">CO₂ Reduction</h3>
+                    <p class="text-on-surface-variant text-sm leading-relaxed">The estimated weight of carbon emissions you avoid each year by switching to clean solar power.</p>
                 </div>
-
             </div>
+        </div>
+    </section>
 
-            <div class="mt-8 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/10 text-center">
-                <p class="text-on-surface-variant text-sm leading-relaxed max-w-2xl mx-auto">
-                    Numbers are based on NASA POWER satellite data, 20% panel efficiency, 25% system loss, and Rp 11,000,000/kWp market price. These are feasibility estimates, not engineering quotes
+    {{-- Methodology Section --}}
+    <section class="px-8 lg:px-20 py-24 bg-surface-container-low">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full leading-none">Transparency</span>
+                <h2 class="font-headline text-4xl font-extrabold text-on-surface mt-5 tracking-tight leading-tight">The math behind the magic</h2>
+                <p class="text-on-surface-variant mt-5 text-base leading-relaxed">
+                    We combine real-time satellite climatology with local market benchmarks to deliver results that are both accurate and realistic for the Indonesian landscape.
                 </p>
+                
+                <div class="space-y-8 mt-10">
+                    <div class="flex gap-5">
+                        <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 font-headline font-black text-primary">1</div>
+                        <div>
+                            <h4 class="font-headline font-bold text-on-surface">Market Pricing </h4>
+                            <p class="text-on-surface-variant text-sm mt-1 leading-relaxed">
+                                Curated benchmarks from <a href="https://iesr.or.id/en/" target="_blank" class="text-primary font-bold hover:underline">IESR</a> for premium residential grid-tie installations in Indonesia (Avg. Rp 11jt/kWp).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5">
+                        <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 font-headline font-black text-primary">2</div>
+                        <div>
+                            <h4 class="font-headline font-bold text-on-surface">NASA POWER Climatology</h4>
+                            <p class="text-on-surface-variant text-sm mt-1 leading-relaxed">
+                                We fetch multi-year solar irradiance averages (GHI) directly for your coordinates using NASA's global earth observation satellites.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5">
+                        <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 font-headline font-black text-primary">3</div>
+                        <div>
+                            <h4 class="font-headline font-bold text-on-surface">Precision Payback Logic</h4>
+                            <p class="text-on-surface-variant text-sm mt-1 leading-relaxed">
+                                A simple, honest ratio of total investment divided by your verified PLN savings over a 25-year system lifespan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-surface-container rounded-[2rem] p-10 border border-outline-variant/10 shadow-3xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-3xl rounded-full -mr-32 -mt-32"></div>
+                
+                <h3 class="font-headline font-extrabold text-2xl text-on-surface mb-8">Simulation Example</h3>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center py-4 border-b border-outline-variant/10">
+                        <span class="text-on-surface-variant font-medium text-sm">Standard System (2 kWp)</span>
+                        <span class="font-headline font-bold text-primary text-xl">Rp 22.000.000</span>
+                    </div>
+                    <div class="flex justify-between items-center py-4 border-b border-outline-variant/10">
+                        <span class="text-on-surface-variant font-medium text-sm">Annual Bill Savings</span>
+                        <span class="font-headline font-bold text-secondary text-xl">Rp 4.500.000</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-8">
+                        <div>
+                            <p class="text-on-surface-variant text-[10px] uppercase font-bold tracking-widest">Payback time</p>
+                            <p class="font-headline font-black text-4xl text-tertiary mt-1">4.9 Years</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-on-surface-variant text-[10px] uppercase font-bold tracking-widest">Profit Year 6-25</p>
+                            <p class="font-headline font-black text-2xl text-on-surface mt-1">Rp 90jt+</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     {{-- Bottom CTA --}}
-    <section class="px-8 lg:px-20 py-24">
-        <div class="max-w-2xl mx-auto text-center">
-            <span class="material-symbols-outlined text-5xl text-primary mb-6 block" style="font-variation-settings: 'FILL' 1;">solar_power</span>
-            <h2 class="font-headline text-4xl font-extrabold text-on-surface tracking-tight">Ready to check your roof?</h2>
-            <p class="text-on-surface-variant mt-4 mb-8 text-lg">Takes about 30 seconds. No account needed</p>
+    <section class="px-8 lg:px-20 py-32">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                <span class="material-symbols-outlined text-3xl text-primary" style="font-variation-settings: 'FILL' 1;">solar_power</span>
+            </div>
+            <h2 class="font-headline text-5xl font-extrabold text-on-surface tracking-tight leading-tight">Ready to see your savings?</h2>
+            <p class="text-on-surface-variant mt-5 mb-12 text-lg max-w-lg mx-auto">Our simulator runs over 50 data points for your specific roof in under 30 seconds. No account needed.</p>
             <a href="{{ route('calculator') }}"
-               class="solar-gradient text-white px-10 py-4 rounded-xl font-headline font-extrabold text-lg shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all inline-flex items-center gap-2">
-                <span class="material-symbols-outlined text-xl">bolt</span>
-                Start the Simulation
+               class="solar-gradient text-white px-12 py-5 rounded-2xl font-headline font-extrabold text-xl shadow-2xl shadow-primary/20 hover:-translate-y-1 active:scale-95 transition-all inline-flex items-center gap-3">
+                <span class="material-symbols-outlined">bolt</span>
+                Start Free Simulation
             </a>
         </div>
     </section>
 
 </div>
 @endsection
+

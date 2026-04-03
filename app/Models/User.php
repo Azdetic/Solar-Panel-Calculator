@@ -30,6 +30,41 @@ class User extends Authenticatable
         return $this->hasMany(Simulation::class);
     }
 
+    public function quotations()
+    {
+        return $this->hasMany(Quotation::class);
+    }
+
+    public function assignedQuotations()
+    {
+        return $this->hasMany(Quotation::class, 'vendor_id');
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isVendor()
+    {
+        return $this->role === 'vendor';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

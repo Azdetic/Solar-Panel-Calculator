@@ -49,7 +49,8 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect()->route('calculator')->with('success', 'Registered successfully');
+        $request->session()->regenerate();
+        return redirect()->intended('/dashboard')->with('message', 'Registered successfully');
     }
 
     public function logout(Request $request) {
